@@ -1,0 +1,115 @@
+---
+openapi: 3.0.3
+info:
+    title: app-books
+    description: App for books
+    license:
+        name: Eclipse Public License - v 1.0
+        url: https://www.eclipse.org/legal/epl-v10.html
+    version: "1.0"
+paths:
+    /books:
+        get:
+            operationId: getBooks
+            responses:
+                "200":
+                    description: Books
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Book'
+        post:
+            operationId: addBook
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Book'
+            responses:
+                "200":
+                    description: Book added
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Book'
+    /books/{id}:
+        get:
+            operationId: getBook
+            parameters:
+                - name: id
+                  in: path
+                  description: The book id
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                "200":
+                    description: Book
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Book'
+                "404":
+                    description: Book not found
+                    content:
+                        application/json: {}
+        put:
+            operationId: updateBook
+            parameters:
+                - name: id
+                  in: path
+                  description: The book id
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Book'
+            responses:
+                "200":
+                    description: Book updated
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Book'
+                "404":
+                    description: Book not found
+                    content:
+                        application/json: {}
+        delete:
+            operationId: deleteBook
+            parameters:
+                - name: id
+                  in: path
+                  description: The book id
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                "200":
+                    description: Book deleted
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Book'
+                "404":
+                    description: Book not found
+                    content:
+                        application/json: {}
+components:
+    schemas:
+        Book:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                title:
+                    type: string
